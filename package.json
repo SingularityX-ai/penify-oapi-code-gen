@@ -1,0 +1,22 @@
+{
+  "name": "openapi-helper",
+  "version": "1.0.0",
+  "description": "A TypeScript library to convert OpenAPI schema to Postman collection and generate sample code.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "postman-code-generators": "^0.1.5",
+    "postman-collection": "^4.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0"
+  }
+}
