@@ -11,7 +11,7 @@ const argv = yargs(hideBin(process.argv))
   .usage('Usage: penify-oapi-codegen -s <source> -l <language> -v <variant> -o <output>')
   .option('s', {
     alias: 'source',
-    describe: 'Path to the OpenAPI JSON file',
+    describe: 'Path to the OpenAPI JSON or YAML file',
     type: 'string',
     demandOption: true
   })
@@ -36,15 +36,14 @@ const argv = yargs(hideBin(process.argv))
 const openAPIPath = argv.s;
 const language = argv.l || null;
 const variant = argv.v || null;
-const outputAPIPath = argv.o || path.resolve(`${path.basename(openAPIPath)}_with_code.json`);
+const outputAPIPath = argv.o || path.resolve(`${path.basename(openAPIPath, path.extname(openAPIPath))}_with_code.json`);
 
 if (!openAPIPath) {
-  console.error('Please provide the path to the OpenAPI JSON file.');
+  console.error('Please provide the path to the OpenAPI file.');
   process.exit(1);
 }
 
 const resolvedOpenAPIPath = path.resolve(openAPIPath);
-const file_name = path.basename(resolvedOpenAPIPath);
 const guid = uuidv4();
 
 const postmanOutputPath = path.resolve(`/tmp/openapi_schema_postman_${guid}.json`);

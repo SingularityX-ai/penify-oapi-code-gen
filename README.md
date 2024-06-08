@@ -1,7 +1,6 @@
+# Penify Open API Code Gen
 
-# Open API Code Gen
-
-Openapi-code-gen is a JavaScript library designed to convert OpenAPI schemas into various code examples. This tool simplifies the process of generating client libraries in different programming languages based on your API documentation.
+`penify-oapi-codegen` is a JavaScript library designed to convert OpenAPI schemas into various code examples. This tool simplifies the process of generating client libraries in different programming languages based on your API documentation.
 
 ## Features
 
@@ -10,7 +9,7 @@ Openapi-code-gen is a JavaScript library designed to convert OpenAPI schemas int
 
 ## Prerequisites
 
-Before installing `openapi-code-gen`, ensure you have the following installed:
+Before installing `penify-oapi-codegen`, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (version 12 or higher)
 - npm (Node package manager)
@@ -23,29 +22,28 @@ npm install -g openapi-to-postmanv2
 
 ## Installation
 
-To install `openapi-code-gen`, run the following command:
+To install `penify-oapi-codegen`, run the following command:
 
 ```bash
-npm install openapi-code-gen
+npm install penify-oapi-codegen
 ```
 
 ## Usage
 
-Once installed, you can use `openapi-code-gen` from the command line to generate code examples from your OpenAPI schemas.
+Once installed, you can use `penify-oapi-codegen` from the command line to generate code examples from your OpenAPI schemas.
 
 ### Generate Code Examples
 
 ```bash
-openapi-code-gen generate -i path/to/your/openapi/schema.yaml -l language -v variant -o path/to/output/code_example
+penify-oapi-codegen -s path/to/your/openapi/schema.yaml -l language -v variant -o path/to/output/code_example
 ```
 
 ### Options
 
-- `generate`: Generates code examples from an OpenAPI schema.
-  - `-i, --input <path>`: Path to the OpenAPI schema file (required).
-  - `-l, --language <language>`: Programming language for the code example (required).
-  - `-v, --variant <variant>`: Variant of the code generator for the specified language (required).
-  - `-o, --output <path>`: Path to the output code example file (required).
+- `-s, --source <path>`: Path to the OpenAPI schema file (required).
+- `-l, --language <language>`: Programming language for the code example (optional).
+- `-v, --variant <variant>`: Variant of the code generator for the specified language (optional).
+- `-o, --output <path>`: Path to the output code example file (optional).
 
 ## Supported Code Generators
 
@@ -92,13 +90,13 @@ The tool supports generating code examples for the following languages and varia
 ### Example 1: Generate Python Requests Code Example
 
 ```bash
-openapi-code-gen generate -i ./schemas/api.yaml -l Python -v Requests -o ./examples/python_requests_example.py
+penify-oapi-codegen -s ./schemas/api.yaml -l Python -v Requests -o ./examples/python_requests_example.py
 ```
 
 ### Example 2: Generate JavaScript Fetch Code Example
 
 ```bash
-openapi-code-gen generate -i ./schemas/api.yaml -l JavaScript -v Fetch -o ./examples/js_fetch_example.js
+penify-oapi-codegen -s ./schemas/api.yaml -l JavaScript -v Fetch -o ./examples/js_fetch_example.js
 ```
 
 ## Contributing
@@ -111,7 +109,7 @@ This project is licensed under the ISC License.
 
 ## Author
 
-[Your Name]
+sumansaurabh
 
 ---
 
