@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "openapi-to-postmanv2": "4.21.0",
-    "postman-code-generators": "1.10.1",
+    "postman-code-generators": "^1.0.2",
     "postman-collection": "^4.4.0"
   },
   "devDependencies": {
