@@ -23,7 +23,7 @@ const outputAPIPath = path.resolve(`${file_name}_with_code.json`);
 console.log("Executing step 1.");
 OpenAPIHelper.convertOpenAPIToPostman(resolvedOpenAPIPath, postmanOutputPath);
 console.log("Executing step 2.");
-OpenAPIHelper.generateSampleCode(postmanOutputPath);
+OpenAPIHelper.generateSampleCode(postmanOutputPath, language, variant);
 console.log("Executing step 3.");
 OpenAPIHelper.addSampleCodeToOpenAPI(resolvedOpenAPIPath, outputAPIPath);
 
