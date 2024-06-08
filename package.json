@@ -1,5 +1,5 @@
 {
-  "name": "openapi-code-gen",
+  "name": "penify-oapi-codegen",
   "version": "1.0.0",
   "description": "A JavaScript library to convert OpenAPI schema to Postman collection and generate sample code.",
   "main": "src/index.js",
