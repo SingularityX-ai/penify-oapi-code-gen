@@ -1,5 +1,5 @@
 {
-  "name": "api-code-generator",
+  "name": "openapi-code-gen",
   "version": "1.0.0",
   "description": "A JavaScript library to convert OpenAPI schema to Postman collection and generate sample code.",
   "main": "src/index.js",
@@ -7,7 +7,7 @@
     "start": "node src/index.js"
   },
   "bin": {
-    "api-code-generator": "src/index.js"
+    "openapi-code-gen": "src/index.js"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,7 @@
 
-# API Code Generator
+# Open API Code Gen
 
-API Code Generator is a JavaScript library designed to convert OpenAPI schemas into various code examples. This tool simplifies the process of generating client libraries in different programming languages based on your API documentation.
+Openapi-code-gen is a JavaScript library designed to convert OpenAPI schemas into various code examples. This tool simplifies the process of generating client libraries in different programming languages based on your API documentation.
 
 ## Features
 
@@ -10,7 +10,7 @@ API Code Generator is a JavaScript library designed to convert OpenAPI schemas i
 
 ## Prerequisites
 
-Before installing `api-code-generator`, ensure you have the following installed:
+Before installing `openapi-code-gen`, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (version 12 or higher)
 - npm (Node package manager)
@@ -23,20 +23,20 @@ npm install -g openapi-to-postmanv2
 
 ## Installation
 
-To install `api-code-generator`, run the following command:
+To install `openapi-code-gen`, run the following command:
 
 ```bash
-npm install api-code-generator
+npm install openapi-code-gen
 ```
 
 ## Usage
 
-Once installed, you can use `api-code-generator` from the command line to generate code examples from your OpenAPI schemas.
+Once installed, you can use `openapi-code-gen` from the command line to generate code examples from your OpenAPI schemas.
 
 ### Generate Code Examples
 
 ```bash
-api-code-generator generate -i path/to/your/openapi/schema.yaml -l language -v variant -o path/to/output/code_example
+openapi-code-gen generate -i path/to/your/openapi/schema.yaml -l language -v variant -o path/to/output/code_example
 ```
 
 ### Options
@@ -92,13 +92,13 @@ The tool supports generating code examples for the following languages and varia
 ### Example 1: Generate Python Requests Code Example
 
 ```bash
-api-code-generator generate -i ./schemas/api.yaml -l Python -v Requests -o ./examples/python_requests_example.py
+openapi-code-gen generate -i ./schemas/api.yaml -l Python -v Requests -o ./examples/python_requests_example.py
 ```
 
 ### Example 2: Generate JavaScript Fetch Code Example
 
 ```bash
-api-code-generator generate -i ./schemas/api.yaml -l JavaScript -v Fetch -o ./examples/js_fetch_example.js
+openapi-code-gen generate -i ./schemas/api.yaml -l JavaScript -v Fetch -o ./examples/js_fetch_example.js
 ```
 
 ## Contributing
