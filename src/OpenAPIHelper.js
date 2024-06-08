@@ -1,25 +1,29 @@
-import * as fs from 'fs';
-import { Collection } from 'postman-collection';
-import * as codegen from 'postman-code-generators';
-import { execSync } from 'child_process';
+const fs = require('fs');
+const { Collection } = require('postman-collection');
+const codegen = require('postman-code-generators');
+const { execSync } = require('child_process');
+const { v4: uuidv4 } = require('uuid');
 
 class OpenAPIHelper {
-  static convertOpenAPIToPostman(openAPIPath: string, postmanOutputPath: string): void {
+  static convertOpenAPIToPostman(openAPIPath, postmanOutputPath) {
     execSync(`openapi2postmanv2 -s ${openAPIPath} -o ${postmanOutputPath}`, { stdio: 'inherit' });
   }
 
-  static generateSampleCode(postmanCollectionPath: string, language: string = 'python-http.client'): void {
+  static generateSampleCode(postmanCollectionPath, language = 'python') {
     const collection = JSON.parse(fs.readFileSync(postmanCollectionPath).toString());
-
-    if (!fs.existsSync('sample_code')) {
+    const guid = uuidv4();
+    if (!fs.existsSync(`sample_code_${guid}`)) {
       fs.mkdirSync('sample_code');
     }
 
-    collection.item.forEach((item: any) => {
-      item.item.forEach((subItem: any) => {
+    const supportedCodegens = codegen.getLanguageList();
+    console.log(supportedCodegens);
+
+    collection.item.forEach(item => {
+      item.item.forEach(subItem => {
         const request = new Collection.Item(subItem).request;
 
-        codegen.convert(language, 'http.client', request, {}, (error: any, snippet: string) => {
+        codegen.convert(language, 'http.client', request, {}, (error, snippet) => {
           if (error) {
             console.error(error);
           } else {
@@ -30,9 +34,9 @@ class OpenAPIHelper {
     });
   }
 
-  static addSampleCodeToOpenAPI(openAPIPath: string, outputAPIPath: string): void {
+  static addSampleCodeToOpenAPI(openAPIPath, outputAPIPath) {
     const openapiSchema = JSON.parse(fs.readFileSync(openAPIPath).toString());
-    const sampleCode: { [key: string]: string } = {};
+    const sampleCode = {};
 
     fs.readdirSync('sample_code').forEach(file => {
       const code = fs.readFileSync(`sample_code/${file}`).toString();
@@ -53,4 +57,4 @@ class OpenAPIHelper {
   }
 }
 
-export default OpenAPIHelper;
+module.exports = OpenAPIHelper;
