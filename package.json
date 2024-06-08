@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "bin": {
-    "openapi-code-gen": "src/index.js"
+    "penify-oapi-codegen": "src/index.js"
   },
   "keywords": [],
   "author": "",
