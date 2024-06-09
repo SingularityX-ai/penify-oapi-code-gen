@@ -34,13 +34,29 @@ Once installed, you can use `penify-oapi-codegen` from the command line to gener
 
 ### Generate Code Examples
 
+#### For all supported languages
+
+It will generate OpenAPI schema for all possible language and variant.
+
+```bash
+penify-oapi-codegen -i path/to/your/openapi/schema.json -o path/to/output/schema_with_code.json
+```
+
+#### For Specific Language and Variant
+
 ```bash
 penify-oapi-codegen -i path/to/your/openapi/schema.json -l language -v variant -o path/to/output/schema_with_code.json
 ```
 
+#### Get all supported languages
+
+```bash
+penify-oapi-codegen -s
+```
+
 ### Options
 
-- `-s, --source <path>`: Path to the OpenAPI schema file (required).
+- `-i, --input <path>`: Path to the OpenAPI schema file (required).
 - `-l, --language <language>`: Programming language for the code example (optional).
 - `-v, --variant <variant>`: Variant of the code generator for the specified language (optional).
 - `-o, --output <path>`: Path to the output code example file (optional).
