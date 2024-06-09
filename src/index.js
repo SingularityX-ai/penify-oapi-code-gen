@@ -8,12 +8,11 @@ const { hideBin } = require('yargs/helpers');
 
 // Parse command-line arguments
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: penify-oapi-codegen -s <source> -l <language> -v <variant> -o <output>')
-  .option('s', {
-    alias: 'source',
-    describe: 'Path to the OpenAPI JSON file',
-    type: 'string',
-    demandOption: true
+  .usage('Usage: penify-oapi-codegen -i <input> -l <language> -v <variant> -o <output> \n penify-oapi-codegen -s')
+  .option('i', {
+    alias: 'input',
+    describe: 'Path to the OpenAPI JSON or YAML file',
+    type: 'string'
   })
   .option('l', {
     alias: 'language',
@@ -30,21 +29,38 @@ const argv = yargs(hideBin(process.argv))
     describe: 'Output file path (optional)',
     type: 'string'
   })
+  .option('s', {
+    alias: 'supported-languages',
+    describe: 'Get the list of supported languages',
+    type: 'boolean'
+  })
   .help()
   .argv;
 
-const openAPIPath = argv.s;
+const openAPIPath = argv.i;
 const language = argv.l || null;
 const variant = argv.v || null;
-const outputAPIPath = argv.o || path.resolve(`${path.basename(openAPIPath)}_with_code.json`);
+const showSupportedLanguages = argv.s || null;
+
+if (showSupportedLanguages) {
+  const supportedLanguages = OpenAPIHelper.getSupportedLanguagesAndVariants();
+  console.log('| Language       | Variant        |');
+  console.log('|----------------|----------------|');
+  supportedLanguages.forEach(item => {
+    console.log(`| ${item.language.padEnd(14)} | ${item.variant.padEnd(14)} |`);
+  });
+  process.exit(0);
+}
+
+
+const outputAPIPath = argv.o || path.resolve(`${path.basename(openAPIPath, path.extname(openAPIPath))}_with_code.json`);
 
 if (!openAPIPath) {
-  console.error('Please provide the path to the OpenAPI JSON file.');
+  console.error('Please provide the path to the OpenAPI file.');
   process.exit(1);
 }
 
 const resolvedOpenAPIPath = path.resolve(openAPIPath);
-const file_name = path.basename(resolvedOpenAPIPath);
 const guid = uuidv4();
 
 const postmanOutputPath = path.resolve(`/tmp/openapi_schema_postman_${guid}.json`);

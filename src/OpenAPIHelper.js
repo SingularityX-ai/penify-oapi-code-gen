@@ -2,10 +2,19 @@ const fs = require('fs');
 const { Collection, Item } = require('postman-collection');
 const codegen = require('postman-code-generators');
 const { execSync } = require('child_process');
+const yaml = require('js-yaml');
+const path = require('path');
 
 class OpenAPIHelper {
   static convertOpenAPIToPostman(openAPIPath, postmanOutputPath) {
     execSync(`openapi2postmanv2 -s ${openAPIPath} -o ${postmanOutputPath}`, { stdio: 'inherit' });
+  }
+
+  static getSupportedLanguagesAndVariants() {
+    const languages = codegen.getLanguageList();
+    const supportedLanguages = [];
+    languages.forEach(lang => lang.variants.forEach(vari => supportedLanguages.push({ language: lang.key, variant: vari.key }))) ;
+    return supportedLanguages;
   }
 
   static generateSampleCode(postmanCollectionPath, language = null, variant = null) {
@@ -37,7 +46,7 @@ class OpenAPIHelper {
           console.error(error);
         } else {
           const fileName = `${operationId}_${language}_${variant}.pm`;
-          fs.writeFileSync(`sample_code/${fileName}`, snippet);
+          fs.writeFileSync(`/tmp/sample_code/${fileName}`, snippet);
         }
       });
     };
@@ -48,7 +57,6 @@ class OpenAPIHelper {
       const method = item.request.method.toLowerCase(); // eg: "get"
       const operationId = `${name.join('_')}_${url.join('_')}_${method}`;
       return operationId;
-      
     }
 
     function processItems(items) {
@@ -71,10 +79,18 @@ class OpenAPIHelper {
   }
 
   static addSampleCodeToOpenAPI(openAPIPath, outputAPIPath) {
-    const openapiSchema = JSON.parse(fs.readFileSync(openAPIPath).toString());
+    let openapiSchema;
+    const ext = path.extname(openAPIPath);
+
+    if (ext === '.yaml' || ext === '.yml') {
+      openapiSchema = yaml.load(fs.readFileSync(openAPIPath, 'utf8'));
+    } else {
+      openapiSchema = JSON.parse(fs.readFileSync(openAPIPath).toString());
+    }
+
     const sampleCode = {};
 
-    fs.readdirSync('sample_code').forEach(file => {
+    fs.readdirSync('/tmp/sample_code').forEach(file => {
       const code = fs.readFileSync(`/tmp/sample_code/${file}`).toString();
       const [operationId, lang, vari] = file.replace('.pm', '').split('~');
       if (!sampleCode[operationId]) {
@@ -98,7 +114,11 @@ class OpenAPIHelper {
       });
     });
 
-    fs.writeFileSync(outputAPIPath, JSON.stringify(openapiSchema, null, 2));
+    if (ext === '.yaml' || ext === '.yml') {
+      fs.writeFileSync(outputAPIPath, yaml.dump(openapiSchema));
+    } else {
+      fs.writeFileSync(outputAPIPath, JSON.stringify(openapiSchema, null, 2));
+    }
   }
 }
 
