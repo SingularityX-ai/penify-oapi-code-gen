@@ -8,12 +8,11 @@ const { hideBin } = require('yargs/helpers');
 
 // Parse command-line arguments
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: penify-oapi-codegen -s <source> -l <language> -v <variant> -o <output>')
-  .option('s', {
-    alias: 'source',
+  .usage('Usage: penify-oapi-codegen -i <input> -l <language> -v <variant> -o <output> \n penify-oapi-codegen -s')
+  .option('i', {
+    alias: 'input',
     describe: 'Path to the OpenAPI JSON or YAML file',
-    type: 'string',
-    demandOption: true
+    type: 'string'
   })
   .option('l', {
     alias: 'language',
@@ -30,12 +29,30 @@ const argv = yargs(hideBin(process.argv))
     describe: 'Output file path (optional)',
     type: 'string'
   })
+  .option('s', {
+    alias: 'supported-languages',
+    describe: 'Get the list of supported languages',
+    type: 'boolean'
+  })
   .help()
   .argv;
 
-const openAPIPath = argv.s;
+const openAPIPath = argv.i;
 const language = argv.l || null;
 const variant = argv.v || null;
+const showSupportedLanguages = argv.s || null;
+
+if (showSupportedLanguages) {
+  const supportedLanguages = OpenAPIHelper.getSupportedLanguagesAndVariants();
+  console.log('| Language       | Variant        |');
+  console.log('|----------------|----------------|');
+  supportedLanguages.forEach(item => {
+    console.log(`| ${item.language.padEnd(14)} | ${item.variant.padEnd(14)} |`);
+  });
+  process.exit(0);
+}
+
+
 const outputAPIPath = argv.o || path.resolve(`${path.basename(openAPIPath, path.extname(openAPIPath))}_with_code.json`);
 
 if (!openAPIPath) {

@@ -3,10 +3,18 @@ const { Collection, Item } = require('postman-collection');
 const codegen = require('postman-code-generators');
 const { execSync } = require('child_process');
 const yaml = require('js-yaml');
+const path = require('path');
 
 class OpenAPIHelper {
   static convertOpenAPIToPostman(openAPIPath, postmanOutputPath) {
     execSync(`openapi2postmanv2 -s ${openAPIPath} -o ${postmanOutputPath}`, { stdio: 'inherit' });
+  }
+
+  static getSupportedLanguagesAndVariants() {
+    const languages = codegen.getLanguageList();
+    const supportedLanguages = [];
+    languages.forEach(lang => lang.variants.forEach(vari => supportedLanguages.push({ language: lang.key, variant: vari.key }))) ;
+    return supportedLanguages;
   }
 
   static generateSampleCode(postmanCollectionPath, language = null, variant = null) {
