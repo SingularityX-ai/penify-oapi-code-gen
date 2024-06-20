@@ -26,7 +26,6 @@ class OpenAPIHelper {
 
     const generateForAll = (request, operationId) => {
       codegen.getLanguageList().forEach(lang => {
-        console.log(`Generating code for ${lang.key}...`);
         lang.variants.forEach(vari => {
           codegen.convert(lang.key, vari.key, request, {}, (error, snippet) => {
             if (error) {

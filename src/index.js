@@ -65,11 +65,10 @@ const guid = uuidv4();
 
 const postmanOutputPath = path.resolve(`/tmp/openapi_schema_postman_${guid}.json`);
 
-console.log("Executing step 1.");
+console.log("Parsing Schema File.");
 OpenAPIHelper.convertOpenAPIToPostman(resolvedOpenAPIPath, postmanOutputPath);
-console.log("Executing step 2.");
+console.log("Generating sample codes for your code routes.");
 OpenAPIHelper.generateSampleCode(postmanOutputPath, language, variant);
-console.log("Executing step 3.");
+console.log("Stiching the new Schema.");
 OpenAPIHelper.addSampleCodeToOpenAPI(resolvedOpenAPIPath, outputAPIPath);
-
-console.log('Process completed successfully.');
+console.log('Successfully udpated the schema.');
