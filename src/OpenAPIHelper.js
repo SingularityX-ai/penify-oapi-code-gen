@@ -18,6 +18,8 @@ class OpenAPIHelper {
   }
 
   static generateSampleCode(postmanCollectionPath, language = null, variant = null) {
+
+    
     const collection = JSON.parse(fs.readFileSync(postmanCollectionPath).toString());
 
     if (!fs.existsSync('/tmp/sample_code')) {
