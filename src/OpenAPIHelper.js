@@ -17,6 +17,7 @@ class OpenAPIHelper {
     return supportedLanguages;
   }
 
+  
   static generateSampleCode(postmanCollectionPath, language = null, variant = null) {
 
     
